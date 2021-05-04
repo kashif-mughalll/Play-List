@@ -1,0 +1,413 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    /* transition: all 0.6s ease-in-out; */
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+:root{
+    --color : #111;
+    --Color0 : #222;
+    --Color1 : #333;
+    --Color2 : #444;
+    --Color3 : #555;
+    --Color31: rgba(85, 85, 85, 0.6);
+    --Color4 : #666;
+    --Color5 : #777;
+    --Color6 : #888;
+    --Color7 : #aaa;
+    --Color8 : #ccc;
+    --Color9 : #ddd;
+    --Color10 : white;
+}
+
+
+html{
+    font-size: 62.5%;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.flex3{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.container{
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--Color1);
+    display: grid;
+    grid-template-rows: 6rem 1fr;
+    box-sizing: border-box;
+}
+
+.navbar{
+    background-color: var(--Color3);
+    box-shadow: 0rem 1rem 1rem -1rem var(--Color0);
+    z-index: 9;
+}
+
+
+.bottom{
+    display: grid;
+    grid-template-columns: 40rem 1fr;
+    height: 100%;
+}
+
+
+
+
+
+.playListDiv{
+    display: grid;
+    grid-template-rows: 7rem 1fr;
+}
+
+.menu{
+    background-color: var(--Color2);
+}
+
+.SearchBar{
+    height: 3.5rem;
+    width: 23rem;
+    background: var(--Color3);
+    padding: 0 0.8rem;
+    border-radius: 1.5rem;
+    margin: 1rem;
+    color: var(--Color8);
+    box-shadow: 0rem 0.5rem 0.5rem -0.5rem var(--Color1);
+}
+
+
+.SearchBar::placeholder{
+    color: var(--Color6);
+}
+
+
+
+.Icons3{    
+    height: 3.5rem;
+    width: 3.5rem;
+    background-color: var(--Color3);
+    border-radius: 50%;
+    color: var(--Color7);
+    font-size: 1.8rem;
+    font-weight: bolder;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    box-shadow: 0rem 0.5rem 0.5rem -0.5rem var(--Color1);
+}
+
+
+.playListContainer{
+    background-color: var(--Color2);
+    height: calc(100vh - 14rem);
+    padding: 0.5rem 3rem;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+
+.PlayListCategory{
+    width: 100%;
+    border-radius: 1rem;
+    margin: 1rem 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    border: 1px solid var(--Color3);
+}
+
+
+.CategoryTitle{
+    height: 3.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr 3rem 4rem;
+    background-color: var(--Color3);
+    border-radius: 1rem 1rem 0 0;
+    box-sizing: border-box;
+}
+
+.Caret-right{
+    font-size: 2.4rem;
+    color: var(--Color7);
+    cursor: pointer;
+    transform: rotate(90deg);
+}
+
+.Rotate1{
+    transform: rotate(90deg);
+}
+
+.RotateBack{
+    transform: rotate(0deg);
+}
+
+
+::-webkit-scrollbar {
+    width: 0.7rem;
+}
+  
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 0.6rem;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #888; 
+}
+
+
+
+.CategoryIcons2{
+    color: var(--Color7);
+    font-size: 1.9rem;
+    cursor: pointer;
+}
+
+
+.CategoryTitleStyle{
+    color: var(--Color7);
+    font-size: 1.7rem;
+    align-self: center;
+    margin: 0.5rem;
+}
+
+
+.CategoryElements{
+    padding: 0.7rem;
+    width: 100%;
+    
+    color: var(--Color7);
+    font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: 5.6rem 1fr 3.7rem;
+    /* margin-left: 2.5rem; */
+}
+
+
+.VideoTitleStyle{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.CategoryIcons{
+    color: var(--Color6);
+    font-size: 2rem;
+}
+
+
+.margin1{
+    justify-self: end;
+    margin-right: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+.playerDiv{
+    display: grid;
+    grid-template-rows: 44rem 1fr;
+}
+
+
+.player{
+}
+
+
+.VideoPlayer{
+    margin: 2rem 3rem;
+    width: 70rem;
+    height: 40rem;
+    box-shadow: 0rem 1rem 1rem var(--Color0);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ############################## */
+
+
+.Cont1{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.Cont2{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+#InputBox{
+    position: relative;
+    width: 45rem;
+    height: 18rem;
+    background-color: var(--Color3);
+    border-radius: 2rem;
+    box-shadow: 1rem 1rem 1rem -1rem var(--Color1);
+}
+
+#Add-Video{
+    position: relative;
+    width: 50rem;
+    height: 25rem;
+    background-color: var(--Color3);
+    border-radius: 2rem;
+    box-shadow: 1rem 1rem 1rem -1rem var(--Color1);
+}
+
+#InputBoxText{
+    margin: 2rem;
+}
+
+
+.input-bar-style{
+    background-color: var(--Color5);
+    width: 33rem;
+    height: 4rem;
+    color: var(--Color8);
+    padding: 0rem 2rem;
+    box-shadow: 1rem 1rem 1rem -1rem var(--Color3);
+    border-radius: 1.5rem;
+    margin: 0.5rem;
+}
+
+#InputBox h1{
+    color: var(--Color7);
+}
+
+.input-bar-style::placeholder{
+    color: var(--Color7);
+}
+
+.Button-Style-2{
+    background-color: var(--Color6);
+    border-radius: 1.5rem;
+    color: var(--Color1);
+    height: 3.5rem;
+    width: 10rem;
+    font-size: 1.5rem;
+}
+
+
+/* ############################## */
+
+
+
+@media only screen and (max-width:1100px){
+    
+    html{
+        font-size: 0.51rem;
+    }
+
+    .VideoPlayer{
+        width: 60rem;
+        height: 34.28rem;
+    }
+}
+
+@media only screen and (max-width:900px){
+
+    html{
+        font-size: 0.49rem;
+    }
+
+    .VideoPlayer{
+        width: 50rem;
+        height: 28.57rem;
+    }
+}
+
+@media only screen and (max-width:700px){
+    html{
+        font-size: 0.45rem;
+    }
+
+    .VideoPlayer{
+        width: 40rem;
+        height: 22.85rem;
+    }
+}
+
+
+@media only screen and (max-width:600px){
+    html{
+        font-size: 0.45rem;
+    }
+
+    .VideoPlayer{
+        margin: 0;
+        width: 100%;
+        height: 28rem;
+        box-shadow: none;
+    }
+
+    .menu{
+        background-color: var(--Color2);
+    }
+
+    .bottom{
+        grid-template-columns:1fr;
+        grid-template-rows: 28rem 1fr;
+        grid-template-areas: "a"
+                             "b";
+
+        height: 100%;
+    }
+
+    .playListDiv{
+        grid-area: b;
+    }
+
+    .playerDiv{
+        grid-area: a;
+    }
+}
