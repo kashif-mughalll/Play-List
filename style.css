@@ -120,7 +120,7 @@ html{
 
 .playListContainer{
     background-color: var(--Color2);
-    height: calc(100vh - 14rem);
+    height: calc(100vh - 13rem);
     padding: 0.5rem 3rem;
     box-sizing: border-box;
     overflow-y: scroll;
@@ -228,22 +228,9 @@ html{
 }
 
 
-
-
-
-
-
-
-
-
-
 .playerDiv{
     display: grid;
     grid-template-rows: 44rem 1fr;
-}
-
-
-.player{
 }
 
 
@@ -253,11 +240,6 @@ html{
     height: 40rem;
     box-shadow: 0rem 1rem 1rem var(--Color0);
 }
-
-
-
-
-
 
 
 
@@ -409,5 +391,11 @@ html{
 
     .playerDiv{
         grid-area: a;
+    }
+
+    .playListContainer{
+        background-color: var(--Color2);
+        height: calc(100vh - 41rem);
+        padding: 0.5rem 3rem;
     }
 }

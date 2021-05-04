@@ -12,70 +12,17 @@ var CategoryID;
 
 var Categories = [];
 
-var Video1 = {
-    ID : '12121',
-    Title : 'Mustafa pe lakhon salaam',
-    URL : "https://youtu.be/HvkqvbdwOlw"
-}
-
-var Video2 = {
-    ID : '112wsed334',
-    Title : 'Wahi khuda hai',
-    URL : "https://youtu.be/74cVT_tUpck"
-}
-
-var Video3 = {
-    ID : '1123ssw3w4',
-    Title : 'Illahi teri chokhat pr',
-    URL : "https://youtu.be/0IGumjEflTo"
-}
-
-var Video4 = {
-    ID : GenerateRandomID(),
-    Title : 'Mohammad ka roza kareeb aa raha hai',
-    URL : "https://youtu.be/roa_88pASak"
-}
-
-
-var Category1 = {
-    Collapse : false,
-    ID : '12de3332',
-    Title : 'Atif Aslam',
-    Videos : []
-}
-
-
-var Category2 = {
-    Collapse : false,
-    ID : '12kk12',
-    Title : 'Junaid Jamshed',
-    Videos : []
-}
-
-
-Category1.Videos.push(Video1);
-Category1.Videos.push(Video2);
-
-Category2.Videos.push(Video3);
-Category2.Videos.push(Video4);
 
 
 
-Categories.push(Category1);
-Categories.push(Category2);
-
-
-RefreshPlayList()
+// RefreshPlayList()
 
 
 
+LoadFromDB();
 
 
-
-
-
-
-InputBox.style.display = 'none';
+// InputBox.style.display = 'none';
 
 
 // ################ Event Listener #######################
@@ -127,18 +74,15 @@ CategoryContainer.addEventListener('click',(e)=>{
     else if(element.classList.contains("Caret-right")){
         CollapseOrExpand(element.parentElement.parentElement.parentElement.id);
     }
-
-
-
 })
 
 
 
-document.querySelector('.navbar').addEventListener('click',()=>{
-    // RefreshPlayList();
-    // console.log("refreshed")
-    console.log(Categories)
-})
+// document.querySelector('.navbar').addEventListener('click',()=>{
+//     // RefreshPlayList();
+//     // console.log("refreshed")
+//     console.log(Categories)
+// })
 
 
 
@@ -158,9 +102,9 @@ function AddCategory(Obj,bool = true){
     </div>
     `;
 
-    // append child in last
     CategoryContainer.innerHTML += CategoryNode;
     if(bool) Categories.push(Obj);
+    UpdateDB();
 }
 
 
@@ -179,6 +123,7 @@ function AddVideoToCategory(Video,CategoryID,bool = true){
             if(Category.ID == CategoryID) Category.Videos.push(Video);
         });
     }
+    UpdateDB()
 }
 
 function GenerateRandomID(){
@@ -209,12 +154,14 @@ function DeleteVideo(Node){
         if(Categories[0].Videos[0]) PlayVideo(Categories[0].Videos[0].URL);
         else PlayVideo("https://youtu.be/9YffrCViTVk");        
     }
+    UpdateDB();
 }
 
 function DeleteCategory(Node){
     for (let i = 0; i < Categories.length; i++) 
         if(Categories[i].ID == Node.id) Categories.splice(i,1);
-    Node.remove();    
+    Node.remove(); 
+    UpdateDB();   
 }
 
 
@@ -259,6 +206,17 @@ function CollapseOrExpand(CategoryID){
     RefreshPlayList();
 }
 
+function UpdateDB(){
+    localStorage.setItem('List',JSON.stringify(Categories));
+}
+
+function LoadFromDB(){
+    if( JSON.parse(localStorage.getItem('List')) == null){
+        AddDefault();
+        UpdateDB();
+    }else Categories = JSON.parse(localStorage.getItem('List'));
+    RefreshPlayList();
+}
 
 function PlayIframeVideo() {
     document.getElementById('VideoPlayer').contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
@@ -273,42 +231,44 @@ function PauseIframeVideo() {
 }
 
 
-
-function ff (){
-    // if(!bool){
-            //     let Arr = document.getElementById(CategoryID).children;
-            //     for (let i = 1; i < Arr.length; i++) {
-            //         document.getElementById(CategoryID).children[i].remove();
-            //     }
-            // }else{
-            //     Category.Videos.forEach(Video => {
-            //         AddVideoToCategory(Video,CategoryID,false);
-            //     });
-            // }
-
-            // if(bool) iTag.style.transform = "rotate(90deg)";        
-    // else iTag.style.transform = "rotate(0deg)";  
-    // let bool;
-    // if(document.getElementById(CategoryID).getAttribute('Collapse') == 'false') bool = false; else bool = true;  
-    
+function AddDefault(){
+    var Video1 = {
+        ID : '12121',
+        Title : 'Mustafa pe lakhon salaam',
+        URL : "https://youtu.be/HvkqvbdwOlw"
+    }    
+    var Video2 = {
+        ID : '112wsed334',
+        Title : 'Wahi khuda hai',
+        URL : "https://youtu.be/74cVT_tUpck"
+    }    
+    var Video3 = {
+        ID : '1123ssw3w4',
+        Title : 'Illahi teri chokhat pr',
+        URL : "https://youtu.be/0IGumjEflTo"
+    }    
+    var Video4 = {
+        ID : GenerateRandomID(),
+        Title : 'Mohammad ka roza kareeb aa raha hai',
+        URL : "https://youtu.be/roa_88pASak"
+    }    
+    var Category1 = {
+        Collapse : false,
+        ID : '12de3332',
+        Title : 'Atif Aslam',
+        Videos : []
+    }
+    var Category2 = {
+        Collapse : false,
+        ID : '12kk12',
+        Title : 'Junaid Jamshed',
+        Videos : []
+    }
+    Category1.Videos.push(Video1);
+    Category1.Videos.push(Video2);    
+    Category2.Videos.push(Video3);
+    Category2.Videos.push(Video4);
+    Categories.push(Category1);
+    Categories.push(Category2);
 }
-
-
-
-
-
-
-// $('a.play-video').click(function(){
-// 	$('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
-// });
-
-// $('a.stop-video').click(function(){
-// 	$('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
-// });
-
-// $('a.pause-video').click(function(){
-// 	$('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
-// });
-
-
 
