@@ -82,33 +82,59 @@ html{
 
 
 
-
-
 .playListDiv{
     display: grid;
-    grid-template-rows: 7rem 1fr;
+    grid-template-rows: 8rem 3rem 1fr;
+    background-color: var(--Color2);
+    box-shadow: 1.4rem 0rem 1rem -1rem var(--Color0);
 }
 
 .menu{
-    background-color: var(--Color2);
+    background-color: var(--Color2); 
 }
 
 .SearchBar{
-    height: 3.5rem;
-    width: 23rem;
+    height: 4rem;
+    width: 27.5rem;
     background: var(--Color3);
     padding: 0 0.8rem;
-    border-radius: 1.5rem;
-    margin: 1rem;
     color: var(--Color8);
+    box-shadow: 0rem 0.5rem 0.5rem -0.5rem var(--Color1);
+}
+
+#SearchPlayListBtn{    
+    height: 4rem;
+    width: 3.5rem;
+    background-color: var(--Color31);
+    color: var(--Color7);
+    font-size: 1.8rem;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-right: 0.7rem;
     box-shadow: 0rem 0.5rem 0.5rem -0.5rem var(--Color1);
 }
 
 
 .SearchBar::placeholder{
-    color: var(--Color6);
+    color: var(--Color7);
 }
 
+
+.Div2{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background-color: var(--Color2);
+    padding: 0rem 3rem;
+}
+
+
+.Div2 h4{
+    font-size: 2.1rem;
+    margin-left: 1rem;
+    color: var(--Color7);
+    margin-right: auto;
+}
 
 
 .Icons3{    
@@ -116,18 +142,22 @@ html{
     width: 3.5rem;
     background-color: var(--Color3);
     border-radius: 50%;
-    color: var(--Color7);
+    color: rgb(112, 165, 172);
     font-size: 1.8rem;
     font-weight: bolder;
     cursor: pointer;
-    margin: 0 0.5rem;
+    margin-right: 1rem;
     box-shadow: 0rem 0.5rem 0.5rem -0.5rem var(--Color1);
+    transition: all 0.3s;
 }
 
+.Icons3:hover{
+    color: rgb(68, 203, 221);
+}
 
 .playListContainer{
     background-color: var(--Color2);
-    height: calc(100vh - 13rem);
+    height: calc(100vh - 17rem);
     padding: 0.5rem 3rem;
     box-sizing: border-box;
     overflow-y: scroll;
@@ -137,29 +167,37 @@ html{
 .PlayListCategory{
     width: 100%;
     border-radius: 1rem;
-    margin: 1rem 0;
+    margin: 2.5rem 0;
     box-sizing: border-box;
     display: flex;
     flex-flow: column;
-    border: 1px solid var(--Color3);
+    /* border: 1px solid var(--Color3); */
 }
 
 
 .CategoryTitle{
     height: 3.5rem;
     display: grid;
-    grid-template-columns: 3rem 1fr 3rem 4rem;
-    background-color: var(--Color3);
+    grid-template-columns: 2.5rem 1fr 3rem 4rem;
+    /* background-color: var(--Color3); */
     border-radius: 1rem 1rem 0 0;
     box-sizing: border-box;
+    border-bottom: 2px solid var(--Color3);
 }
 
 .Caret-right{
-    font-size: 2.4rem;
-    color: var(--Color7);
+    font-size: 2.3rem;
+    color: rgb(112, 165, 172);
     cursor: pointer;
     transform: rotate(90deg);
+    transition: all 0.3s;
 }
+
+
+.Caret-right:hover{
+    color: #ddd
+}
+
 
 .Rotate1{
     transform: rotate(90deg);
@@ -190,10 +228,17 @@ html{
 
 
 .CategoryIcons2{
-    color: var(--Color7);
-    font-size: 1.9rem;
+    color: var(--Color6);
+    font-size: 1.8rem;
     cursor: pointer;
+    transition: all 0.3s;
 }
+
+.CategoryIcons2:hover{
+    color: var(--Color9);
+}
+
+
 
 
 .CategoryTitleStyle{
@@ -201,6 +246,7 @@ html{
     font-size: 1.7rem;
     align-self: center;
     margin: 0.5rem;
+    font-weight: normal;
 }
 
 
@@ -211,7 +257,7 @@ html{
     color: var(--Color7);
     font-size: 1.5rem;
     display: grid;
-    grid-template-columns: 5.6rem 1fr 3.7rem;
+    grid-template-columns: 5.6rem 1fr 3.4rem;
     /* margin-left: 2.5rem; */
 }
 
@@ -221,12 +267,30 @@ html{
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
+    font-size: 1.45rem;
+    transition: all 0.3s;
+}
+
+.VideoTitleStyle:hover{
+    color: var(--Color9);
 }
 
 .CategoryIcons{
-    color: var(--Color6);
     font-size: 2rem;
 }
+
+.Delete-Video{
+    color: rgb(168, 113, 113);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+
+.Delete-Video:hover{
+    color: rgb(233, 94, 94);
+}
+
+
 
 
 .margin1{
@@ -245,7 +309,9 @@ html{
     margin: 2rem 3rem;
     width: 70rem;
     height: 40rem;
-    box-shadow: 0rem 1rem 1rem var(--Color0);
+    box-shadow: 0rem 0rem 2rem var(--color);
+    border: 1rem solid var(--Color1);
+    box-sizing: border-box;
 }
 
 
@@ -263,35 +329,37 @@ html{
     left: 0;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(170, 170, 170, 0.7);
+    background-color: rgba(17, 17, 17, 0.8);
+    z-index: 50;
 }
 
 .Cont2{
-    background-color: rgba(170, 170, 170, 0.7);
-    display: flex;
+    background-color: rgba(17, 17, 17, 0.8);
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
     height: 100vh;
     width: 100vw;
+    z-index: 51;
 }
 
 
 #InputBox{
     position: relative;
-    width: 50rem;
-    height: 20rem;
+    width: 55rem;
+    height: 27rem;
     background-color: var(--Color3);
-    border-radius: 2rem;
+    border-radius: 1rem;
     box-shadow: 1rem 1rem 1rem -1rem var(--Color1);
 }
 
 #Add-Video{
     position: relative;
-    width: 50rem;
-    height: 25rem;
+    width: 55rem;
+    height: 30rem;
     background-color: var(--Color3);
-    border-radius: 2rem;
+    border-radius: 1rem;
     box-shadow: 1rem 1rem 1rem -1rem var(--Color1);
 }
 
@@ -306,9 +374,10 @@ html{
     height: 4rem;
     color: var(--Color8);
     padding: 0rem 2rem;
-    box-shadow: 1rem 1rem 1rem -1rem var(--Color3);
+    box-shadow: 1rem 1rem 1rem -1rem var(--Color2);
     border-radius: 1.5rem;
-    margin: 0.5rem;
+    margin: 0.8rem;
+    font-size: 1.4rem;
 }
 
 .TitleDesign{
@@ -418,7 +487,29 @@ html{
 
     .playListContainer{
         background-color: var(--Color2);
-        height: calc(100vh - 41rem);
+        height: calc(100vh - 45rem);
         padding: 0.5rem 3rem;
     }
+
+    .SearchBar{
+        width: 33rem;
+    }
+
+    #Add-Video{
+        width: 39rem;
+        height: 30rem;
+    }
+
+    #InputBox{
+        width: 39rem;
+        height: 27rem;
+    }
+
+    
+    .input-bar-style{
+        width: 30rem;
+        height: 3.5rem;
+    }
 }
+
+

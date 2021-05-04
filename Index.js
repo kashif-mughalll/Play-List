@@ -11,14 +11,16 @@ var CancelBtn = document.getElementById('CancelBtn');
 var CancelBtn2 = document.getElementById('CancelBtn2');
 var CategoryID;
 
-
 var Categories = [];
 
-
-
-
+var LastPlayedVideo = localStorage.getItem('LastPlayed');
+if(LastPlayedVideo != null) {
+    VideoPlayer.addEventListener('load',()=>{
+        LastPlayedVideo = LastPlayedVideo.substring(1,LastPlayedVideo.length-1);
+        PlayVideo(LastPlayedVideo);
+    })
+}
 LoadFromDB();
-
 
 
 
@@ -29,14 +31,13 @@ Layer2.addEventListener('click',(e)=>{
     if(e.target.id == 'Hide2'){
         Layer2.style.display = 'none';
     }
-
 })
 
 CancelBtn2.addEventListener('click',()=>{
     Layer2.style.display = 'none';
 });
 
-CancelBtn2.addEventListener('click',()=>{
+CancelBtn.addEventListener('click',()=>{
     InputBox.style.display = 'none';
 });
 
@@ -59,6 +60,7 @@ AddCategoryBtn.addEventListener('click',()=>{
     }
     AddCategory(Category);
     InputBox.style.display = 'none';
+    document.getElementById("InputBoxText").value = '';
 })
 
 AddVideoToCategoryBtn.addEventListener('click',()=>{
@@ -70,6 +72,8 @@ AddVideoToCategoryBtn.addEventListener('click',()=>{
     AddVideoToCategory(Video,CategoryID);
     CategoryID = '';
     Layer2.style.display = 'none';
+    Name_Feild.value = '';
+    Url_Bar.value = '';
 });
 
 
@@ -177,6 +181,7 @@ function DeleteCategory(Node){
 function PlayVideo(URL){
     if(youtube_parser(URL) != false){
         VideoPlayer.src = "https://www.youtube.com/embed/" + youtube_parser(URL) + '?enablejsapi=1&version=3&playerapiid=ytplayer';
+        localStorage.setItem('LastPlayed',JSON.stringify(VideoPlayer.src));
     }
     document.getElementById('VideoPlayer').onload = ()=> { PlayIframeVideo() };
 }
