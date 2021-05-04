@@ -7,6 +7,8 @@ var Url_Bar = document.getElementById('URL-Bar');
 var Name_Feild = document.getElementById('Name-Feild');
 var Layer2 = document.querySelector('.Cont2');
 var VideoPlayer = document.getElementById('VideoPlayer');
+var CancelBtn = document.getElementById('CancelBtn');
+var CancelBtn2 = document.getElementById('CancelBtn2');
 var CategoryID;
 
 
@@ -15,18 +17,34 @@ var Categories = [];
 
 
 
-// RefreshPlayList()
-
-
-
 LoadFromDB();
 
 
-// InputBox.style.display = 'none';
 
 
 // ################ Event Listener #######################
 
+
+Layer2.addEventListener('click',(e)=>{
+    if(e.target.id == 'Hide2'){
+        Layer2.style.display = 'none';
+    }
+
+})
+
+CancelBtn2.addEventListener('click',()=>{
+    Layer2.style.display = 'none';
+});
+
+CancelBtn2.addEventListener('click',()=>{
+    InputBox.style.display = 'none';
+});
+
+InputBox.addEventListener('click',(e)=>{
+    if(e.target.id == 'Hide1'){
+        InputBox.style.display = 'none';
+    }
+});
 
 ListBtn.addEventListener('click',()=>{
     InputBox.style.display = 'flex';
@@ -78,15 +96,6 @@ CategoryContainer.addEventListener('click',(e)=>{
 
 
 
-// document.querySelector('.navbar').addEventListener('click',()=>{
-//     // RefreshPlayList();
-//     // console.log("refreshed")
-//     console.log(Categories)
-// })
-
-
-
-
 
 // $$$$$$$$$$$$$$$$$$$$$$$$$$   funtions    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -94,7 +103,7 @@ function AddCategory(Obj,bool = true){
     var CategoryNode = `    
     <div Collapse=${Obj.Collapse} id="${Obj.ID}" class="PlayListCategory">
         <div class="CategoryTitle">
-            <div class="flex">  <i class="fas fa-caret-right Caret-right ${Obj.Collapse ? 'Rotate1' : 'RotateBack'}"></i>  </div>
+            <div class="flex">  <i class="fas fa-caret-right Caret-right ${!Obj.Collapse ? 'Rotate1' : 'RotateBack'}"></i>  </div>
             <h1 class="CategoryTitleStyle"> ${Obj.Title} </h1>
             <div class="flex3"> <i class="fas fa-plus-circle CategoryIcons2 Add-To-Category"></i> </div>
             <div class="flex3"> <i class="fas fa-trash CategoryIcons2 Delete-Category"></i>  </div>
@@ -270,5 +279,21 @@ function AddDefault(){
     Category2.Videos.push(Video4);
     Categories.push(Category1);
     Categories.push(Category2);
+}
+
+
+async function GetVideoDetails(){
+
+    fetch("http://www.youtube.com/oembed?url=http%3A//youtube.com/watch%3Fv%3DM3r2XDceM6A&format=json")
+    .then(response => {
+        console.log(res)
+    })
+    .catch(error => {
+        console.log(error)
+    });
+
+
+    let Data = await fetch();
+    console.log(Data)
 }
 

@@ -12,20 +12,26 @@
 <body>
     
 
-    <div class="Cont1 flex">
+    <div id="Hide1" class="Cont1 flex">
         <div id="InputBox" class="flex2">
-            <h1>Create New Category</h1>
+            <h1 class="TitleDesign">Create New Category</h1>
             <input class="input-bar-style" id="InputBoxText" placeholder="Enter Category Name ...." type="text">
-            <button  class="Button-Style-2" id="SubmitBtn">Create</button>
+            <div class="flex">
+                <button  class="Button-Style-2" id="SubmitBtn">Create</button>
+                <button  class="Button-Style-2" id="CancelBtn">Cancel</button>
+            </div>
         </div>
     </div> 
 
-    <div class="Cont2 flex">
+    <div id="Hide2" class="Cont2 flex">
         <div id="Add-Video" class="flex2">
-            <h1>Create New Category</h1>
+            <h1 class="TitleDesign" >Add A Video File</h1>
             <input class="input-bar-style" id="URL-Bar" placeholder="Enter Video URL ...." type="text">
             <input class="input-bar-style" id="Name-Feild" placeholder="Title of video" type="text">
-            <button class="Button-Style-2" id="SubmitBtn2">Create</button>
+            <div class="flex">
+                <button class="Button-Style-2" id="SubmitBtn2">Add</button>
+                <button  class="Button-Style-2" id="CancelBtn2">Cancel</button>
+            </div>
         </div>
     </div> 
 
@@ -38,7 +44,10 @@
     <div class="container">
 
         <div class="navbar">
-
+            <div class="flex"><i class="fas fa-bars hamburger"></i></div> 
+            <div></div>
+            <div class="flex">  </div> 
+            <div class="flex">  </div> 
         </div>
 
         <div class="bottom">
