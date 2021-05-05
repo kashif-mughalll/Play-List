@@ -319,8 +319,8 @@ html{
 
 .VideoPlayer{
     margin: 2rem 3rem;
-    width: 70rem;
-    height: 40rem;
+    width: 85rem;
+    height: 48rem;
     box-shadow: 0rem 0rem 2rem var(--color);
     border: 1rem solid var(--Color1);
     box-sizing: border-box;

@@ -86,6 +86,12 @@ ListBtn.addEventListener('click',()=>{
 })
 
 AddCategoryBtn.addEventListener('click',()=>{
+
+    if(document.getElementById("InputBoxText").value == null){
+        alert("Fields are empty");
+        return;
+    }
+
     var Category = {
         Collapse : false,
         ID : GenerateRandomID(),
@@ -98,6 +104,13 @@ AddCategoryBtn.addEventListener('click',()=>{
 })
 
 AddVideoToCategoryBtn.addEventListener('click',()=>{
+
+    if(Url_Bar.value == '' || Name_Feild.value == '') 
+    {
+        alert("Field are empty");
+        return;
+    }
+
     let Video = {
         Type : GetVideoType(Url_Bar.value),
         ID : GenerateRandomID(),
