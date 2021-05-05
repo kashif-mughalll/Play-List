@@ -9,9 +9,13 @@ var Layer2 = document.querySelector('.Cont2');
 var VideoPlayer = document.getElementById('VideoPlayer');
 var CancelBtn = document.getElementById('CancelBtn');
 var CancelBtn2 = document.getElementById('CancelBtn2');
+var SearchBar = document.querySelector('.SearchBar');
+// var FacebookPlayer = document.getElementById('FacebookVideoPlayer');
 var CategoryID;
 
 var Categories = [];
+
+
 
 var LastPlayedVideo = localStorage.getItem('LastPlayed');
 if(LastPlayedVideo != null) {
@@ -25,6 +29,36 @@ LoadFromDB();
 
 
 // ################ Event Listener #######################
+
+
+SearchBar.addEventListener('keyup',(e)=>{
+    let Text = e.target.value;
+
+    if(Text == '') RefreshPlayList();
+    else SearchInCategories(Text);
+})
+
+
+function SearchInCategories(Text){
+    let Filter = [];
+    
+    let Search = {
+        Collapse : false,
+        ID : 'S123QW21112Q444',
+        Title : 'Search Result .....',
+        Videos : []
+    }
+
+    Categories.forEach(Category => {        
+        Category.Videos.forEach( Video => {            
+            if(Video.Title.toLowerCase().includes(Text.toLowerCase())) Search.Videos.push(Video)
+        });
+    });
+
+    Filter.push(Search);
+
+    RefreshPlayList(true,Filter);
+}
 
 
 Layer2.addEventListener('click',(e)=>{
@@ -81,39 +115,67 @@ CategoryContainer.addEventListener('click',(e)=>{
     var element = e.target;
 
     if(element.classList.contains("Add-To-Category")){
-        Layer2.style.display = 'flex';
-        CategoryID = element.parentElement.parentElement.parentElement.id;
+        if(element.parentElement.parentElement.parentElement.id != 'S123QW21112Q444'){
+            Layer2.style.display = 'flex';
+            CategoryID = element.parentElement.parentElement.parentElement.id;
+        }        
     }
     else if(element.classList.contains("Delete-Video")){
         DeleteVideo(element.parentElement);
     }
     else if(element.classList.contains("Delete-Category")){
-        DeleteCategory(element.parentElement.parentElement.parentElement);
+        if(element.parentElement.parentElement.parentElement.id != 'S123QW21112Q444') 
+            DeleteCategory(element.parentElement.parentElement.parentElement);
+        else { 
+            RefreshPlayList();
+            SearchBar.value = ''
+        }
     }
     else if(element.classList.contains("VideoTitleStyle")){
         PlayVideo(element.parentElement.getAttribute('video-url'))        
     }
     else if(element.classList.contains("Caret-right")){
-        CollapseOrExpand(element.parentElement.parentElement.parentElement.id);
+        if( element.parentElement.parentElement.parentElement.id != 'S123QW21112Q444' )
+            CollapseOrExpand(element.parentElement.parentElement.parentElement.id);
     }
 })
 
 
 
 
+
 // $$$$$$$$$$$$$$$$$$$$$$$$$$   funtions    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+
+
 function AddCategory(Obj,bool = true){
-    var CategoryNode = `    
-    <div Collapse=${Obj.Collapse} id="${Obj.ID}" class="PlayListCategory">
+
+    let CategoryNode
+
+    if(Obj.ID == 'S123QW21112Q444')
+    {
+        CategoryNode = `    
+        <div Collapse=${Obj.Collapse} id="${Obj.ID}" class="PlayListCategory">
+        <div class="CategoryTitle">
+            <div class="flex">  <i class="fas fa-caret-right Caret-right ${!Obj.Collapse ? 'Rotate1' : 'RotateBack'}"></i>  </div>
+            <h1 class="CategoryTitleStyle"> ${Obj.Title} </h1>
+            <div class="flex3">  </div>
+            <div class="flex3"> <i class="fas fa-reply CategoryIcons2 Delete-Category"></i>  </div>
+        </div>
+        </div>`;
+    }
+    else
+    {
+        CategoryNode = `    
+        <div Collapse=${Obj.Collapse} id="${Obj.ID}" class="PlayListCategory">
         <div class="CategoryTitle">
             <div class="flex">  <i class="fas fa-caret-right Caret-right ${!Obj.Collapse ? 'Rotate1' : 'RotateBack'}"></i>  </div>
             <h1 class="CategoryTitleStyle"> ${Obj.Title} </h1>
             <div class="flex3"> <i class="fas fa-plus-circle CategoryIcons2 Add-To-Category"></i> </div>
             <div class="flex3"> <i class="fas fa-trash CategoryIcons2 Delete-Category"></i>  </div>
         </div>
-    </div>
-    `;
+        </div>`;
+    }
 
     CategoryContainer.innerHTML += CategoryNode;
     if(bool) Categories.push(Obj);
@@ -145,7 +207,7 @@ function GenerateRandomID(){
 }
 
 
-function DeleteVideo(Node){
+function DeleteVideo(Node,bool = false){
     let CategoryId = Node.parentElement.id;
     let VideoID = Node.id;
     let DeletedVideoID = youtube_parser(Node.getAttribute('video-url'));
@@ -153,11 +215,12 @@ function DeleteVideo(Node){
     
     for (let i = 0; i < Categories.length; i++) {
         const Category = Categories[i];
-        if(Category.ID == CategoryId){
-            for (let j = 0; j <  Category.Videos.length; j++) {
-                const Video = Category.Videos[j];
-                if(Video.ID == VideoID) Category.Videos.splice(j,1);
-            }
+        // if(Category.ID == CategoryId){
+            
+        // }
+        for (let j = 0; j <  Category.Videos.length; j++) {
+            const Video = Category.Videos[j];
+            if(Video.ID == VideoID) Category.Videos.splice(j,1); 
         }
     }
     Node.remove();
@@ -180,7 +243,7 @@ function DeleteCategory(Node){
 
 function PlayVideo(URL){
     if(youtube_parser(URL) != false){
-        VideoPlayer.src = "https://www.youtube.com/embed/" + youtube_parser(URL) + '?enablejsapi=1&version=3&playerapiid=ytplayer';
+        VideoPlayer.src = "https://www.youtube-nocookie.com/embed/" + youtube_parser(URL) + '?enablejsapi=1&version=3&playerapiid=ytplayer';
         localStorage.setItem('LastPlayed',JSON.stringify(VideoPlayer.src));
     }
     document.getElementById('VideoPlayer').onload = ()=> { PlayIframeVideo() };
@@ -193,7 +256,9 @@ function youtube_parser(url){
     return (match && match[1].length==11)? match[1] : false;
 }
 
-function RefreshPlayList(){
+function RefreshPlayList(bool = false,Filter){
+    let Categories = this.Categories;
+    if (bool) Categories = Filter;
     removeAllChildNodes(CategoryContainer);
     Categories.forEach(Category => {
         AddCategory(Category,false);        
@@ -247,21 +312,25 @@ function PauseIframeVideo() {
 
 function AddDefault(){
     var Video1 = {
+        Type : 'youtube',
         ID : '12121',
         Title : 'Mustafa pe lakhon salaam',
         URL : "https://youtu.be/HvkqvbdwOlw"
     }    
     var Video2 = {
+        Type : 'youtube',
         ID : '112wsed334',
         Title : 'Wahi khuda hai',
         URL : "https://youtu.be/74cVT_tUpck"
     }    
     var Video3 = {
+        Type : 'youtube',
         ID : '1123ssw3w4',
         Title : 'Illahi teri chokhat pr',
         URL : "https://youtu.be/0IGumjEflTo"
     }    
     var Video4 = {
+        Type : 'youtube',
         ID : GenerateRandomID(),
         Title : 'Mohammad ka roza kareeb aa raha hai',
         URL : "https://youtu.be/roa_88pASak"
@@ -284,21 +353,5 @@ function AddDefault(){
     Category2.Videos.push(Video4);
     Categories.push(Category1);
     Categories.push(Category2);
-}
-
-
-async function GetVideoDetails(){
-
-    fetch("http://www.youtube.com/oembed?url=http%3A//youtube.com/watch%3Fv%3DM3r2XDceM6A&format=json")
-    .then(response => {
-        console.log(res)
-    })
-    .catch(error => {
-        console.log(error)
-    });
-
-
-    let Data = await fetch();
-    console.log(Data)
 }
 
