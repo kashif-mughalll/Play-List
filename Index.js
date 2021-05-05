@@ -6,11 +6,11 @@ var CategoryContainer = document.querySelector('.playListContainer');
 var Url_Bar = document.getElementById('URL-Bar');
 var Name_Feild = document.getElementById('Name-Feild');
 var Layer2 = document.querySelector('.Cont2');
-var VideoPlayer = document.getElementById('VideoPlayer');
+// var VideoPlayer = document.getElementById('VideoPlayer');
 var CancelBtn = document.getElementById('CancelBtn');
 var CancelBtn2 = document.getElementById('CancelBtn2');
 var SearchBar = document.querySelector('.SearchBar');
-// var FacebookPlayer = document.getElementById('FacebookVideoPlayer');
+var FacebookPlayer = document.getElementById('FacebookVideoPlayer');
 var CategoryID;
 
 var Categories = [];
@@ -19,10 +19,10 @@ var Categories = [];
 
 var LastPlayedVideo = localStorage.getItem('LastPlayed');
 if(LastPlayedVideo != null) {
-    VideoPlayer.addEventListener('load',()=>{
-        LastPlayedVideo = LastPlayedVideo.substring(1,LastPlayedVideo.length-1);
-        PlayVideo(LastPlayedVideo);
-    })
+    LastPlayedVideo = LastPlayedVideo.substring(1,LastPlayedVideo.length-1);
+    PlayVideo(LastPlayedVideo);
+}else{
+    PlayVideo("https://youtu.be/9YffrCViTVk");
 }
 LoadFromDB();
 
@@ -99,6 +99,7 @@ AddCategoryBtn.addEventListener('click',()=>{
 
 AddVideoToCategoryBtn.addEventListener('click',()=>{
     let Video = {
+        Type : GetVideoType(Url_Bar.value),
         ID : GenerateRandomID(),
         Title : Name_Feild.value,
         URL : Url_Bar.value
@@ -184,9 +185,11 @@ function AddCategory(Obj,bool = true){
 
 
 function AddVideoToCategory(Video,CategoryID,bool = true){
+    let bool1 = false;
+    if(Video.Type == 'youtube') bool1 = true;
     var VideoNode = `
     <div id="${Video.ID}" video-url="${Video.URL}" class="CategoryElements">
-        <i class="fab fa-youtube CategoryIcons margin1"></i>
+        <i class="fab fa-${bool1 ? 'youtube' : 'facebook-square'} CategoryIcons margin1"></i>
         <p class="VideoTitleStyle"> ${Video.Title} </p>
         <i class="fas fa-times CategoryIcons Delete-Video"></i>
     </div>
@@ -242,11 +245,18 @@ function DeleteCategory(Node){
 
 
 function PlayVideo(URL){
+    let Container = document.getElementById('IframeDiv');
     if(youtube_parser(URL) != false){
-        VideoPlayer.src = "https://www.youtube-nocookie.com/embed/" + youtube_parser(URL) + '?enablejsapi=1&version=3&playerapiid=ytplayer';
-        localStorage.setItem('LastPlayed',JSON.stringify(VideoPlayer.src));
+        let YoutubeFrame = `<iframe id="VideoPlayer" class="VideoPlayer" src="https://www.youtube.com/embed/${youtube_parser(URL)}?enablejsapi=1&autoplay=1&version=3&playerapiid=ytplayer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        Container.innerHTML = YoutubeFrame;
+        localStorage.setItem('LastPlayed',JSON.stringify(URL));
+        document.getElementById('VideoPlayer').onload = ()=> { PlayIframeVideo() };
     }
-    document.getElementById('VideoPlayer').onload = ()=> { PlayIframeVideo() };
+    else{
+        let FaceBookFrame = `<iframe class="VideoPlayer" id="FacebookVideoPlayer" src="https://www.facebook.com/plugins/video.php?autoplay=1&mute=0&href=${URL}" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`;
+        Container.innerHTML = FaceBookFrame;
+        localStorage.setItem('LastPlayed',JSON.stringify(URL));
+    }    
 }
 
 
@@ -335,6 +345,12 @@ function AddDefault(){
         Title : 'Mohammad ka roza kareeb aa raha hai',
         URL : "https://youtu.be/roa_88pASak"
     }    
+    var Video5 = {
+        Type : 'facebook',
+        ID : '5546ttr54tr',
+        Title : 'CPL kamran akmal batting video',
+        URL : "https://fb.watch/5ifiK1XBiH/"
+    }   
     var Category1 = {
         Collapse : false,
         ID : '12de3332',
@@ -347,11 +363,29 @@ function AddDefault(){
         Title : 'Junaid Jamshed',
         Videos : []
     }
+    var Category3 = {
+        Collapse : false,
+        ID : '12kk12112122',
+        Title : 'Facebook',
+        Videos : []
+    }
+    
     Category1.Videos.push(Video1);
     Category1.Videos.push(Video2);    
     Category2.Videos.push(Video3);
     Category2.Videos.push(Video4);
+    Category3.Videos.push(Video5);
     Categories.push(Category1);
     Categories.push(Category2);
+    Categories.push(Category3);
+}
+
+
+function GetVideoType(URL){
+    if(youtube_parser(URL) != false){
+        return 'youtube';
+    }else{
+        return 'facebook';
+    }
 }
 
